@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Seguridad Domiciliario</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Seguridad Domiciliario</h1>
+    </header>
+    <main>
+        <section class="camera-view">
+            <h2>Vista de la Cámara</h2>
+            <div class="camera-feed">
+                <!-- Inicialmente sin src; se asigna al activar el monitoreo -->
+                <img id="video-feed" src="" alt="Streaming en vivo">
+            </div>
+        </section>
+        <section class="status">
+            <h2>Estado del Sistema</h2>
+            <p id="system-status">Monitoreo Inactivo</p>
+            <button id="toggle-monitoring">Activar Monitoreo</button>
+        </section>
+    </main>
+
+    <!-- Modal de Advertencia -->
+    <div id="alert-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>¡Alerta de Seguridad!</h2>
+            <p>Se ha detectado una persona.</p>
+        </div>
+    </div>
+
+    <script>
+        let monitoring = false;
+        let detectionInterval;
+
+        // Función que activa o desactiva el monitoreo
+        document.getElementById("toggle-monitoring").addEventListener("click", function() {
+            monitoring = !monitoring;
+            const videoFeed = document.getElementById("video-feed");
+            const systemStatus = document.getElementById("system-status");
+            if (monitoring) {
+                // Activar monitoreo: asigna el src y comienza a chequear detecciones
+                videoFeed.src = "{{ url_for('video_feed') }}";
+                systemStatus.textContent = "Monitoreo Activo";
+                this.textContent = "Detener Monitoreo";
+                detectionInterval = setInterval(checkDetection, 3000);
+            } else {
+                // Detener monitoreo: remueve el src, para de chequear y oculta el modal
+                videoFeed.src = "";
+                systemStatus.textContent = "Monitoreo Inactivo";
+                this.textContent = "Activar Monitoreo";
+                clearInterval(detectionInterval);
+                detectionInterval = null;
+                document.getElementById("alert-modal").style.display = "none";
+            }
+        });
+
+        // Función para consultar la detección
+        function checkDetection() {
+            fetch('/check_detection')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.detected) {
+                        document.getElementById("alert-modal").style.display = "block";
+                    }
+                });
+        }
+
+        // Permite cerrar el modal
+        document.querySelector(".close").addEventListener("click", function() {
+            document.getElementById("alert-modal").style.display = "none";
+        });
+    </script>
+</body>
+</html>
