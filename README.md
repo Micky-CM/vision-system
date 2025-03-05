@@ -1,4 +1,3 @@
-"# vision-system"
 # Security Vision System
 
 Esta aplicación web utiliza Flask, OpenCV, NumPy y YOLO para realizar detección de movimiento y alertar sobre posibles intrusos mediante un stream de video.
@@ -21,13 +20,13 @@ Sigue estos pasos para ejecutar el proyecto en tu máquina local:
 
 2. **Crear y activar el entorno virtual**
 
-**En Windows**
+- En Windows
   ```sh
   python -m venv venv
   venv\Scripts\activate
   ```
 
-**En macOS/Linux**
+- En macOS/Linux
   ```sh
   python3 -m venv venv
   source venv/bin/activate
@@ -43,14 +42,14 @@ Una vez activado el entorno virtual, instala las dependencias con:
 4. **Ejecutar la aplicación**
 
 Establece las variables de entorno y lanza la aplicación:
-**En Windows**
+- En Windows
   ```sh
   set FLASK_APP=app.py
   set FLASK_ENV=development
   flask run
   ```
 
-**En macOS/Linux**
+- En macOS/Linux
   ```sh
   export FLASK_APP=app.py
   export FLASK_ENV=development
@@ -62,6 +61,7 @@ Una vez ejecutado, abre tu navegador en http://127.0.0.1:5000 para ver la aplica
 
 
 ## Estructura del Proyecto
+```
 /vision-system
 ├── app.py
 ├── models/
@@ -74,3 +74,4 @@ Una vez ejecutado, abre tu navegador en http://127.0.0.1:5000 para ver la aplica
 │   └── styles.css
 ├── requirements.txt
 └── README.md
+```
