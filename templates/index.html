@@ -11,15 +11,14 @@
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='img/owl-eye-logo.png') }}" alt="logo de owl eye">
+        <img src="{{ url_for('static', filename='img/owl-eye-logo.png') }}" alt="Logo de Owl Eye">
         <h1>Owl Eye</h1>
     </header>
     <main>
         <section class="camera-view">
             <h2>Vista de la Cámara</h2>
             <div class="camera-feed">
-                <!-- Inicialmente sin src; se asigna al activar el monitoreo -->
-                <img id="video-feed" src="" alt="Streaming en vivo">
+                <img id="video-feed" src="{{ url_for('static', filename='img/owl-eye-dark-logo.png') }}" alt="Streaming en vivo">
             </div>
         </section>
         <section class="status">
